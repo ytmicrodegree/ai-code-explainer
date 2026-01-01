@@ -85,7 +85,7 @@
             // Getting the code entered by the user
             const code = document.getElementById("code").value;
 
-            const res = await fetch("http://localhost:3000/explain", {
+            const res = await fetch("/explain", {
                 method: "POST",
                 headers: {"Content-Type": "application/json"},
                 body: JSON.stringify({code})         //send as JSON data
