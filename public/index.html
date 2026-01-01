@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Code Explainer</title>
+
+    <style>
+        body {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background: #f5f7fb;
+    padding: 40px 20px;
+  }
+
+  h2 {
+    text-align: center;
+    margin-bottom: 25px;
+  }
+
+  .container {
+    max-width: 900px;
+    margin: auto;
+    background: #ffffff;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  }
+
+  textarea {
+    width: 100%;
+    min-height: 220px;
+    padding: 15px;
+    font-family: Consolas, monospace;
+    font-size: 14px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    resize: vertical;
+  }
+
+  button {
+    margin-top: 15px;
+    padding: 12px 24px;
+    font-size: 16px;
+    border: none;
+    border-radius: 6px;
+    background: #4f46e5;
+    color: #ffffff;
+    cursor: pointer;
+  }
+
+  button:hover {
+    background: #4338ca;
+  }
+
+  #output {
+    margin-top: 30px;
+    padding: 20px;
+    background: #0f172a;
+    color: #e5e7eb;
+    border-radius: 8px;
+    font-family: Consolas, monospace;
+    font-size: 14px;
+    line-height: 1.6;
+    white-space: pre-wrap;
+    min-height: 120px;
+  }
+
+  .output-title {
+    margin-top: 30px;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #111827;
+  }
+    </style>
+</head>
+<body>
+    <h2>AI Code Explainer</h2>
+    <textarea id="code" placeholder="Paste your code..."></textarea>
+    <br />
+    <button onclick="explainCode()">Explain Code</button>
+    <pre id="output"></pre>
+
+    <script>
+        async function explainCode(){
+            // Getting the code entered by the user
+            const code = document.getElementById("code").value;
+
+            const res = await fetch("http://localhost:3000/explain", {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({code})         //send as JSON data
+            })
+
+            //convert JS object to json
+            const data = await res.json();
+
+            // displaying the text returned from AI to frontend
+            document.getElementById("output").innerText = data.explanation;
+        }
+    </script>
+</body>
+</html>
